@@ -30,6 +30,6 @@ jobs:
 
   call-reusable-workflow:
     needs: determine-branch
-    uses: ./.github/workflows/reusable-workflow.yml
+    uses: ./.github/workflows/reusable.yml
     with:
       branch-value: ${{ needs.determine-branch.outputs.branch-value }}
