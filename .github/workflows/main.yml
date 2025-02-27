@@ -14,9 +14,9 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-#      - name: Get Source Branch Name
-#        id: get-branch
-#        run: echo "Branch Name: ${{ github.ref_name }}"
+      - name: Get Source Branch Name
+        id: get-branch
+        run: echo "Branch Name: ${{ github.ref_name }}"
 
       - name: Set Branch Value
         id: set-output
