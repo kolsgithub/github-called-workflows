@@ -16,7 +16,8 @@ jobs:
 
       - name: Get Source Branch Name
         id: get-branch
-        run: echo "Branch Name: ${{ github.ref_name }}"
+        run: | 
+            echo "Branch Name: github.ref_name"
 
       - name: Set Branch Value
         id: set-output
