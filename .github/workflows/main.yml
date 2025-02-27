@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - '**'
+
 jobs:
   determine-branch:
     runs-on: ubuntu-latest
@@ -20,11 +21,9 @@ jobs:
         id: set-output
         run: |
           if [[ "${{ github.ref_name }}" == "main" ]]; then
-            echo "branch-value=production" >> $GITHUB_ENV
-            echo "::set-output name=branch-value::production"
+            echo "branch-value=production" >> $GITHUB_OUTPUT
           else
-            echo "branch-value=development" >> $GITHUB_ENV
-            echo "::set-output name=branch-value::development"
+            echo "branch-value=development" >> $GITHUB_OUTPUT
           fi
 
   call-reusable-workflow:
