@@ -1,4 +1,5 @@
 name: Main Workflow
+
 on:
   push:
     branches:
@@ -13,9 +14,9 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Get Source Branch Name
-        id: get-branch
-        run: echo "Branch Name: ${{ github.ref_name }}"
+#      - name: Get Source Branch Name
+#        id: get-branch
+#        run: echo "Branch Name: ${{ github.ref_name }}"
 
       - name: Set Branch Value
         id: set-output
@@ -28,6 +29,6 @@ jobs:
 
   call-reusable-workflow:
     needs: determine-branch
-    uses: ./.github/workflows/reusable.yml
+    uses: ./.github/workflows/reusable-workflow.yml
     with:
       branch-value: ${{ needs.determine-branch.outputs.branch-value }}
