@@ -5,31 +5,24 @@ on:
     branches:
       - '**'
 
+permissions:
+  contents: write
+  
 jobs:
   determine-branch:
     runs-on: ubuntu-latest
-    outputs:
-      branch-value: ${{ steps.set-output.outputs.branch-value }}
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
 
-      - name: Get Source Branch Name
-        id: get-branch
-        run: | 
-            echo "Branch Name: github.ref_name"
+    - name: Configure Git Authentication
+      run: |
+        git config --global url."https://x-access-token:${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Checkout Repo-A
+      uses: actions/checkout@v3
 
-      - name: Set Branch Value
-        id: set-output
-        run: |
-          if [[ "${{ github.ref_name }}" == "main" ]]; then
-            echo "branch-value=production" >> $GITHUB_OUTPUT
-          else
-            echo "branch-value=development" >> $GITHUB_OUTPUT
-          fi
-
-  call-reusable-workflow:
-    needs: determine-branch
-    uses: ./.github/workflows/reusable.yml
-    with:
-      branch-value: ${{ needs.determine-branch.outputs.branch-value }}
+    - name: Clone Repo-B
+      run: git clone https://github.com/kolsgithub/github-action-importer-issueops.git
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
